@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Order — Website Intake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft:#241B13;
+    --kraft-soft:#8a7660;
+    --paper:#FDFBF2;
+    --paper-dim:#EFEADA;
+    --ink:#221A11;
+    --ink-soft:#6b5f4d;
+    --red:#C1301C;
+    --teal:#2F6E62;
+    --rule:#D8CFB6;
+    --font-display:'Bebas Neue', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --font-body:'Inter', sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background-color:var(--kraft);
+    background-image:
+      radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1.4px);
+    background-size:5px 5px;
+    font-family:var(--font-body);
+    color:var(--ink);
+    padding:56px 16px 90px;
+  }
+
+  .wrap{
+    max-width:560px;
+    margin:0 auto;
+  }
+
+  /* ---- header, off the ticket ---- */
+  .intro{
+    text-align:center;
+    color:var(--paper);
+    margin-bottom:30px;
+  }
+  .intro .kicker{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--kraft-soft);
+    margin-bottom:10px;
+  }
+  .intro h1{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(40px,8vw,58px);
+    letter-spacing:0.01em;
+    line-height:0.95;
+    margin:0 0 12px;
+  }
+  .intro p{
+    font-size:14.5px;
+    line-height:1.6;
+    color:#cabfa9;
+    max-width:36ch;
+    margin:0 auto;
+  }
+
+  /* ---- the ticket ---- */
+  .ticket{
+    background:var(--paper);
+    position:relative;
+    transform:rotate(-0.4deg);
+    box-shadow:0 24px 50px -18px rgba(0,0,0,0.6);
+  }
+
+  .perf{
+    height:16px;
+    background-image:radial-gradient(circle at center, var(--kraft) 4px, transparent 4.2px);
+    background-size:20px 16px;
+    background-position:10px center;
+    background-repeat:repeat-x;
+  }
+  .perf.bottom{transform:translateY(1px) rotate(180deg);}
+
+  .ticket-inner{
+    padding:30px 30px 8px;
+  }
+
+  .ticket-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:6px;
+  }
+  .ticket-head .brand{
+    font-family:var(--font-display);
+    font-size:26px;
+    letter-spacing:0.02em;
+  }
+  .ticket-head .meta{
+    text-align:right;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+
+  .dashed{
+    border-bottom:1.5px dashed var(--rule);
+    margin:16px 0;
+  }
+
+  .section{
+    padding:18px 30px 22px;
+    border-bottom:1.5px dashed var(--rule);
+  }
+  .section:last-of-type{border-bottom:none;}
+
+  .section-title{
+    font-family:var(--font-mono);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin:0 0 16px;
+  }
+
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:520px){.row{grid-template-columns:1fr;}}
+
+  label{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin-bottom:6px;
+  }
+  label .opt{text-transform:none; letter-spacing:0; color:#a89d87;}
+
+  input[type=text], input[type=email], select, textarea{
+    width:100%;
+    border:none;
+    border-bottom:1.5px solid var(--ink);
+    background:transparent;
+    border-radius:0;
+    padding:6px 2px 8px;
+    font-family:var(--font-body);
+    font-size:15px;
+    color:var(--ink);
+  }
+  select{
+    -webkit-appearance:none;
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23221A11' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 2px center;
+    background-size:10px 7px;
+    padding-right:20px;
+  }
+  select:invalid{color:#8a7f6c;}
+  textarea{
+    border:1.5px solid var(--rule);
+    border-radius:2px;
+    padding:10px 12px;
+    resize:vertical;
+    min-height:90px;
+    line-height:1.55;
+    background:#fffef9;
+  }
+  input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:2px;
+  }
+
+  .items{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .item-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:1px dotted var(--rule);
+    font-family:var(--font-mono);
+    font-size:13.5px;
+  }
+  .item-row:last-child{border-bottom:none;}
+  .item-row label{
+    text-transform:none;
+    letter-spacing:0;
+    font-size:13.5px;
+    color:var(--ink);
+    margin:0;
+    cursor:pointer;
+    flex:1;
+  }
+  .item-row input[type=checkbox]{
+    appearance:none;
+    -webkit-appearance:none;
+    width:17px; height:17px;
+    border:1.5px solid var(--ink);
+    border-radius:2px;
+    display:grid;
+    place-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+    background:#fffef9;
+  }
+  .item-row input[type=checkbox]::before{
+    content:"";
+    width:10px; height:10px;
+    transform:scale(0);
+    background:var(--red);
+    clip-path:polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 86% 0%, 45% 68%);
+    transition:transform 0.1s ease-in-out;
+  }
+  .item-row input[type=checkbox]:checked::before{transform:scale(1);}
+
+  .totalline{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--ink-soft);
+    padding-top:10px;
+    letter-spacing:0.04em;
+  }
+
+  .submit-block{
+    padding:22px 30px 6px;
+    text-align:center;
+  }
+
+  button.stamp{
+    font-family:var(--font-display);
+    font-size:22px;
+    letter-spacing:0.03em;
+    background:transparent;
+    color:var(--red);
+    border:3px solid var(--red);
+    border-radius:6px;
+    padding:12px 30px;
+    cursor:pointer;
+    transform:rotate(-2deg);
+    transition:transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    width:100%;
+  }
+  button.stamp:hover{transform:rotate(0deg); background:var(--red); color:var(--paper);}
+  button.stamp:active{transform:scale(0.97) rotate(0deg);}
+  button.stamp:disabled{opacity:0.55; cursor:wait;}
+
+  .status{
+    display:block;
+    margin-top:10px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    min-height:16px;
+  }
+  .status.error{color:var(--red);}
+
+  .barcode{
+    display:flex;
+    align-items:flex-end;
+    gap:2px;
+    height:34px;
+    padding:20px 30px 4px;
+    justify-content:center;
+  }
+  .barcode span{
+    display:block;
+    width:2px;
+    background:var(--ink);
+  }
+
+  .foot-note{
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:0 20px 22px;
+  }
+
+  /* success */
+  .success{
+    display:none;
+    text-align:center;
+    padding:70px 30px 60px;
+  }
+  .success .stamp-mark{
+    display:inline-block;
+    border:3px solid var(--teal);
+    color:var(--teal);
+    font-family:var(--font-display);
+    font-size:20px;
+    letter-spacing:0.06em;
+    padding:12px 22px;
+    border-radius:6px;
+    transform:rotate(-5deg);
+    margin-bottom:22px;
+  }
+  .success h2{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:400;
+    margin:0 0 10px;
+  }
+  .success p{
+    font-family:var(--font-body);
+    font-size:14px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    max-width:34ch;
+    margin:0 auto;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="kicker">Custom website — build order</div>
+    <h1>Let's put in<br>your order.</h1>
+    <p>Fill out the ticket below. I'll read every line and get back to you with next steps.</p>
+  </div>
+
+  <div class="ticket">
+    <div class="perf top"></div>
+
+    <div class="ticket-inner">
+      <div class="ticket-head">
+        <div class="brand">BUILD ORDER</div>
+        <div class="meta">
+          NO. <span id="order-no">------</span><br>
+          <span id="order-date"></span>
+        </div>
+      </div>
+    </div>
+
+    <form id="intake-form">
+
+      <div class="section">
+        <p class="section-title">Customer</p>
+        <div class="row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+        </div>
+        <div class="field">
+          <label for="business">Business / project name <span class="opt">(optional)</span></label>
+          <input type="text" id="business" name="business">
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="section-title">Order details</p>
+        <div class="row">
+          <div class="field">
+            <label for="site_type">Site type</label>
+            <select id="site_type" name="site_type" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>Portfolio</option>
+              <option>Small business / local shop</option>
+              <option>Online store</option>
+              <option>Blog / content site</option>
+              <option>Landing page</option>
+              <option>Booking / service site</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pages">Page count</label>
+            <select id="pages" name="pages" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>1 (single page)</option>
+              <option>2–4</option>
+              <option>5–8</option>
+              <option>9+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="budget">Budget</label>
+            <select id="budget" name="budget" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>Under ₦50,000</option>
+              <option>₦50,000–₦150,000</option>
+              <option>₦150,000–₦300,000</option>
+              <option>₦300,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>ASAP</option>
+              <option>Within 2 weeks</option>
+              <option>Within a month</option>
+              <option>Flexible / no rush</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="section-title">Items selected</p>
+        <div class="items">
+          <div class="item-row"><input type="checkbox" id="f1" name="features" value="Contact form"><label for="f1">Contact form</label></div>
+          <div class="item-row"><input type="checkbox" id="f2" name="features" value="Online store"><label for="f2">Online store</label></div>
+          <div class="item-row"><input type="checkbox" id="f3" name="features" value="Booking / scheduling"><label for="f3">Booking / scheduling</label></div>
+          <div class="item-row"><input type="checkbox" id="f4" name="features" value="Blog"><label for="f4">Blog</label></div>
+          <div class="item-row"><input type="checkbox" id="f5" name="features" value="Photo gallery"><label for="f5">Photo gallery</label></div>
+          <div class="item-row"><input type="checkbox" id="f6" name="features" value="Social media links"><label for="f6">Social media links</label></div>
+          <div class="item-row"><input type="checkbox" id="f7" name="features" value="Newsletter signup"><label for="f7">Newsletter signup</label></div>
+          <div class="item-row"><input type="checkbox" id="f8" name="features" value="Search"><label for="f8">Search</label></div>
+        </div>
+        <div class="totalline"><span id="item-count">0 items selected</span><span>—</span></div>
+      </div>
+
+      <div class="section">
+        <p class="section-title">Special instructions</p>
+        <div class="field">
+          <label for="description">What's the site for, and who's it for?</label>
+          <textarea id="description" name="description" required placeholder="e.g. A booking site for my dog-grooming business. Customers should be able to see services, prices, and pick a time slot."></textarea>
+        </div>
+        <div class="field" style="margin-top:14px;">
+          <label for="inspiration">Sites you like the look of <span class="opt">(optional)</span></label>
+          <input type="text" id="inspiration" name="inspiration" placeholder="e.g. stripe.com, apple.com/store">
+        </div>
+      </div>
+
+      <div class="submit-block">
+        <button type="submit" class="stamp" id="submit-btn">SEND ORDER</button>
+        <span class="status" id="status"></span>
+      </div>
+    </form>
+
+    <div class="success" id="success">
+      <div class="stamp-mark">RECEIVED ✓</div>
+      <h2>Order's in.</h2>
+      <p>Thanks — I've got your build order and will follow up shortly to get started.</p>
+    </div>
+
+    <div class="barcode" id="barcode"></div>
+    <div class="foot-note">Thank you for your order · Keep this ticket</div>
+
+    <div class="perf bottom"></div>
+  </div>
+
+</div>
+
+<script>
+  // Ticket number + date, purely decorative
+  document.getElementById('order-no').textContent = Math.floor(100000 + Math.random()*899999);
+  document.getElementById('order-date').textContent = new Date().toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
+
+  // Random-width barcode, purely decorative
+  const barcode = document.getElementById('barcode');
+  for(let i=0;i<40;i++){
+    const bar = document.createElement('span');
+    bar.style.width = (Math.random() > 0.7 ? 3 : 1.5) + 'px';
+    bar.style.height = (60 + Math.random()*40) + '%';
+    barcode.appendChild(bar);
+  }
+
+  // Live item count
+  const checkboxes = document.querySelectorAll('input[name="features"]');
+  const itemCount = document.getElementById('item-count');
+  function updateCount(){
+    const n = document.querySelectorAll('input[name="features"]:checked').length;
+    itemCount.textContent = n + (n === 1 ? ' item selected' : ' items selected');
+  }
+  checkboxes.forEach(cb => cb.addEventListener('change', updateCount));
+
+  // Submissions go straight to your FormBold endpoint — no backend needed.
+  const API_ENDPOINT = "https://formbold.com/s/oJaLe";
+
+  const form = document.getElementById('intake-form');
+  const statusEl = document.getElementById('status');
+  const btn = document.getElementById('submit-btn');
+  const success = document.getElementById('success');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    statusEl.textContent = '';
+    statusEl.classList.remove('error');
+    btn.disabled = true;
+    btn.textContent = 'SENDING…';
+
+    const formData = new FormData(form);
+
+    try{
+      const res = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if(res.ok){
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch(err){
+      statusEl.textContent = 'Something went wrong — please try again.';
+      statusEl.classList.add('error');
+      btn.disabled = false;
+      btn.textContent = 'SEND ORDER';
+    }
+  });
+</script>
+
+</body>
+</html>
